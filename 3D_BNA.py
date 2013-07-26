@@ -20,7 +20,6 @@ class GLWidget(QtOpenGL.QGLWidget):
 
     def initializeGL(self):
 	lightPos = (5.0, 5.0, 10.0, 1.0)
-
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPos)
 	glEnable(GL_LIGHTING)
 	glEnable(GL_LIGHT0)
@@ -45,6 +44,7 @@ class GLWidget(QtOpenGL.QGLWidget):
 
 
 class MainWindow(QtGui.QMainWindow):
+
     def __init__(self):
 	super(MainWindow, self).__init__()
 
