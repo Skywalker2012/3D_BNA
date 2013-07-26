@@ -70,7 +70,7 @@ class MainWindow(QtGui.QMainWindow):
         centralWidget.setLayout(centralLayout)
 
 	self.setWindowTitle("3D Brain Network Analysis Tool")
-        self.resize(400, 300)
+        self.resize(800, 600)
 
     def about(self):
         QtGui.QMessageBox.about(self, "About 3D Brain Network Analysis Tool",
@@ -78,11 +78,22 @@ class MainWindow(QtGui.QMainWindow):
 		"from NICS Lab in E.E. Dept at Tsinghua University. "
 		"If you find any problem, "
 		"please email me at <b>lgs930420@gmail.com</b>.")
+    
+	
+    def grabFrameBuffer(self):
+	image = self.glWidget.grabFrameBuffer()
+	pixmap = QtGui.QPixmap.fromImage(image)
+	filename = QtGui.QFileDialog.getSaveFileName(self,'Save file','./',
+		'Image Files (*.png)')
+        pixmap.save(filename)
 
 
     def createActions(self):
 	self.exitAct = QtGui.QAction('Exit', self, shortcut = 'Ctrl+Q', 
 		triggered = self.close)
+
+	self.grabFrameBufferAct = QtGui.QAction('&Grab Frame Buffer', self,
+			shortcut = 'Ctrl+G', triggered = self.grabFrameBuffer)
 
 	self.aboutAct = QtGui.QAction("&About", self, triggered=self.about)
 
@@ -93,6 +104,9 @@ class MainWindow(QtGui.QMainWindow):
 	self.fileMenu = self.menuBar().addMenu('&File')
 	self.fileMenu.addSeparator()
 	self.fileMenu.addAction(self.exitAct)
+
+	self.editMenu = self.menuBar().addMenu('&Edit')
+	self.editMenu.addAction(self.grabFrameBufferAct)
 
 	self.helpMenu = self.menuBar().addMenu("&Help")
         self.helpMenu.addAction(self.aboutAct)
